@@ -16,24 +16,24 @@
 # out in checking your assignment)
 
 '''
-Making a magic 8-ball app
 Modifications:
--
--
--
+- Added an image
+- Personalized font
+- Submit button turns red after you click
+- Added red background to instructions
 '''
 
 from tkinter import *
 from tkinter import font
 import random
-#from PIL import Image, ImageTk
+
 
 class App():
     def __init__(self, master):
-        # Storing the question entered
+        # Storing the question and answer
+        self.answer_opts = ["Yes!", "Not a chance", "No way!", "Most likely", "Probably?", "I wouldn't be surprised...", "Maybe", 'Without a doubt', 'I wouldn\'t count on it', 'Ask again later']
         self.entery = DoubleVar()
         self.entery.set("")
-
         self.answer = DoubleVar()
         self.answer.set("8ball's Answer Here!")
 
@@ -43,32 +43,31 @@ class App():
         # Creating the instruction text box
         self.instructions = Label(master, text="Ask any yes/no question:", font=self.font)
         self.instructions.grid(column=2, row=4, columnspan=4, sticky="e" + "w")
+        self.instructions.config(bg = "red")
+        self.instructions.config(bd = 1)
 
         # Creating the entry widget
         self.entry = Entry(master, textvariable=self.entery)
         self.entry.grid(column=2, row=5, columnspan=4, sticky= "e" + "w")
 
-        # Creating the "Submit" button
-        self.results = Button(master, text="Submit!", command=lambda: self.get_answer(), font= self.font)
+        # Creating the "Submit" Label
+        self.results = Label(master, text="Submit!")
+        self.results.bind("<Button-1>", self.get_answer)
         self.results.grid(column=3, row=6, columnspan=2, sticky="e" + "w")
-
-        # self.but_submit = Button(master, text = "Submit!")
-        # self.but_submit.grid(column=3, row=6, columnspan= 2, sticky = "e" + "w")
 
         # Creating the fortune/answer area
         self.answer_label = Label(master, textvariable=self.answer, font= self.font)
         self.answer_label.grid(column=2, row=7, columnspan=4, sticky= "e" + "w")
 
         # Creating the image widget
-        #self.image = Image.open(file = "8ball.gif")
-        #self.image.grid(column=3, row=2, columnspan=2, rowspan= 2, sticky= "n" + "s" + "e" + "w")
+        self.image = PhotoImage(file = "images/8_ball.gif")
+        Label(master, image=self.image).grid(column=3, row=2, columnspan=2, rowspan= 2, sticky= "n" + "s" + "e" + "w")
 
-        self.answer_opts = ["Yes!", "Not a chance", "No way!", "Most likely", "Probably?", "I wouldn't be surprised...","Maybe", 'Without a doubt', 'I wouldn\'t count on it','Ask again later']
-
-    def get_answer(self):
+    def get_answer(self, event):
         self.entery.set("")
         random_answer = self.answer_opts[random.randrange(len(self.answer_opts))]
         self.answer.set(random_answer)
+        event.widget.config(bg= "red")
 
 if __name__ == "__main__":
     root = Tk()
