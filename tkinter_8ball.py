@@ -8,22 +8,25 @@
 # - Add a proper title (appears in the window tab) √
 # - Add a Label widget at the top to give the user instructions/intro. √
 # - Add an Entry widget so the user can enter their question. √
-# - Add a Button widget which will trigger the answer.
-# - Add a Label widget to display the answer (set to a initial value of "Your Fortune Here" or "--" or similar)
-# - Get your random answer message from a list of at least 10 possible strings. (e.g. ["Yes", "No", "Most Likely", "Definitely", etc...])
+# - Add a Button widget which will trigger the answer. √
+# - Add a Label widget to display the answer (set to a initial value of "Your Fortune Here" or "--" or similar) √
+# - Get your random answer message from a list of at least 10 possible strings. (e.g. ["Yes", "No", "Most Likely", "Definitely", etc...]) √
 # - Add THREE or more other style modifications to make your app unique (font family, font size, color, padding, image, borders, justification,
 # whatever you can find in tkinter library etc.)  Make a comment at the top or bottom of your code to tell me your 3 things you did. (Just to help me
 # out in checking your assignment)
 
-
 '''
 Making a magic 8-ball app
+Modifications:
+-
+-
+-
 '''
-
 
 from tkinter import *
 from tkinter import font
 import random
+#from PIL import Image, ImageTk
 
 class App():
     def __init__(self, master):
@@ -34,8 +37,11 @@ class App():
         self.answer = DoubleVar()
         self.answer.set("8ball's Answer Here!")
 
+        # Font
+        self.font = font.Font(family="fixedsys", size=20)
+
         # Creating the instruction text box
-        self.instructions = Label(master, text="Ask any yes/no question:")
+        self.instructions = Label(master, text="Ask any yes/no question:", font=self.font)
         self.instructions.grid(column=2, row=4, columnspan=4, sticky="e" + "w")
 
         # Creating the entry widget
@@ -43,23 +49,21 @@ class App():
         self.entry.grid(column=2, row=5, columnspan=4, sticky= "e" + "w")
 
         # Creating the "Submit" button
-        self.results = Button(master, text="Submit!", command=lambda: self.get_answer())
+        self.results = Button(master, text="Submit!", command=lambda: self.get_answer(), font= self.font)
         self.results.grid(column=3, row=6, columnspan=2, sticky="e" + "w")
 
         # self.but_submit = Button(master, text = "Submit!")
         # self.but_submit.grid(column=3, row=6, columnspan= 2, sticky = "e" + "w")
 
         # Creating the fortune/answer area
-        self.answer_label = Label(master, textvariable=self.answer)
+        self.answer_label = Label(master, textvariable=self.answer, font= self.font)
         self.answer_label.grid(column=2, row=7, columnspan=4, sticky= "e" + "w")
-
 
         # Creating the image widget
         #self.image = Image.open(file = "8ball.gif")
         #self.image.grid(column=3, row=2, columnspan=2, rowspan= 2, sticky= "n" + "s" + "e" + "w")
 
-
-        self.answer_opts = ["Yes!", "Not a change", "No way!", "Most likely", "Probably?", "I wouldn't be surprised...","Maybe", 'Without a doubt', 'I wouldn\'t count on it','Ask again later']
+        self.answer_opts = ["Yes!", "Not a chance", "No way!", "Most likely", "Probably?", "I wouldn't be surprised...","Maybe", 'Without a doubt', 'I wouldn\'t count on it','Ask again later']
 
     def get_answer(self):
         self.entery.set("")
